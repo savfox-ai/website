@@ -2,10 +2,109 @@
   "deploying": {
     "en": "Deploying",
     "zh-hans": "部署"
-  }//,
-  // "donate": {
-  //   "en": "Donate",
-  //   "zh-hans": "资助项目"
-  // }
+  },
+  "projects": {
+    "en": "Projects",
+    "zh-hans": "项目"
+  },
+  "docs": {
+    "en": "Documentation",
+    "zh-hans": "文档"
+  },
+  "languagesText": {
+    "en": "Languages",
+    "zh-hans": "语言"
+  },
+  "themeText": {
+    "en": "Theme",
+    "zh-hans": "主题"
+  },
+  "versionsText": {
+    "en": "Versions",
+    "zh-hans": "版本"
+  },
+  "menuTitle": {
+    "en": "Menu",
+    "zh-hans": "菜单"
+  },
+  "outlineTitle": {
+    "en": "On this page",
+    "zh-hans": "本页目录"
+  },
+  "scrollToTopText": {
+    "en": "Back to top",
+    "zh-hans": "返回顶部"
+  },
+  "lastUpdatedText": {
+    "en": "Last Updated",
+    "zh-hans": "最后更新"
+  },
+  "prevPageText": {
+    "en": "Previous Page",
+    "zh-hans": "上一页"
+  },
+  "nextPageText": {
+    "en": "Next Page",
+    "zh-hans": "下一页"
+  },
+  "sourceCodeText": {
+    "en": "Source Code",
+    "zh-hans": "源代码"
+  },
+  "searchPlaceholderText": {
+    "en": "Search Docs",
+    "zh-hans": "搜索文档"
+  },
+  "searchPanelCancelText": {
+    "en": "Cancel",
+    "zh-hans": "取消"
+  },
+  "searchNoResultsText": {
+    "en": "No results found",
+    "zh-hans": "未找到结果"
+  },
+  "searchSuggestedQueryText": {
+    "en": "Try searching for",
+    "zh-hans": "尝试搜索"
+  },
+  "overview.filterNameText": {
+    "en": "Filter",
+    "zh-hans": "筛选"
+  },
+  "overview.filterPlaceholderText": {
+    "en": "Enter keyword",
+    "zh-hans": "输入关键词"
+  },
+  "overview.filterNoResultText": {
+    "en": "No matching API found",
+    "zh-hans": "未找到匹配项"
+  },
+  "openInText": {
+    "en": "Open in",
+    "zh-hans": "在以下位置打开"
+  },
+  "copyMarkdownText": {
+    "en": "Copy Markdown",
+    "zh-hans": "复制 Markdown"
+  },
+  "copyMarkdownLinkText": {
+    "en": "Copy Markdown Link",
+    "zh-hans": "复制 Markdown 链接"
+  },
+  "editLinkText": {
+    "en": "Edit this page",
+    "zh-hans": "编辑此页"
+  },
+  "codeButtonGroupCopyButtonText": {
+    "en": "Copy code",
+    "zh-hans": "复制代码"
+  },
+  "notFoundText": {
+    "en": "Page not found",
+    "zh-hans": "页面未找到"
+  },
+  "takeMeHomeText": {
+    "en": "Take me home",
+    "zh-hans": "返回首页"
+  }
 }
-

@@ -1,6 +1,6 @@
 ---
 title: 'Configuration'
-description: 'Configure Savfox behavior.'
+description: 'Layered configuration, profiles, and overrides.'
 ---
 
 # Configuration
@@ -13,7 +13,7 @@ Savfox uses a layered configuration system with support for profiles, CLI overri
 ~/.savfox/config.toml
 ```
 
-Alternative formats:
+Alternative primary formats are also supported:
 
 ```
 ~/.savfox/config.yaml
@@ -24,7 +24,64 @@ On Windows:
 
 ```
 %USERPROFILE%\.savfox\config.toml
+%USERPROFILE%\.savfox\config.yaml
+%USERPROFILE%\.savfox\config.yml
 ```
+
+Startup auto-detect order is:
+
+1. `config.toml`
+2. `config.yaml`
+3. `config.yml`
+
+If multiple files exist, the highest-priority file above is used.
+
+## YAML Format
+
+Savfox accepts native YAML config files with the same schema as TOML:
+
+```yaml
+model: gpt-4o
+
+sandbox_mode: workspace-write
+
+gateway:
+  host: 127.0.0.1
+  port: 18881
+```
+
+Use the CLI to migrate from TOML to YAML:
+
+```bash
+savfox config convert --to yaml --output ~/.savfox/config.yaml
+```
+
+When converting from TOML, Savfox preserves the leading comment block when possible.
+
+## Environment Variable Substitution
+
+String values support environment-variable expansion before validation:
+
+- `${VAR}`: use `VAR`, empty string when unset.
+- `${VAR:-default}`: use `default` when `VAR` is unset or empty.
+- `${VAR:?error message}`: fail config loading if `VAR` is unset or empty.
+
+Examples:
+
+```toml
+model = "${SAVFOX_MODEL:-gpt-4o}"
+gateway_token = "${SAVFOX_GATEWAY_TOKEN:?SAVFOX_GATEWAY_TOKEN is required}"
+```
+
+```yaml
+model: ${SAVFOX_MODEL:-gpt-4o}
+gateway_token: ${SAVFOX_GATEWAY_TOKEN:?SAVFOX_GATEWAY_TOKEN is required}
+```
+
+Supported variables:
+
+- Any environment variable available to the running Savfox process is supported.
+- Common examples in config files: `SAVFOX_MODEL`, `SAVFOX_GATEWAY_TOKEN`, `SAVFOX_HOME`, `PATH`, `HOME`/`USERPROFILE`.
 
 ## Config Sections
 
@@ -32,9 +89,11 @@ On Windows:
 
 ```toml
 [auth]
-provider = "openai"
-api_key = "${OPENAI_API_KEY}"
+provider = "openai"        # or "chatgpt", "ollama", "lmstudio", etc.
+api_key = "sk-..."         # API key (if using API key auth)
 ```
+
+For ChatGPT-managed authentication (recommended), use `savfox login` instead of setting API keys manually.
 
 ### Model Selection
 
@@ -48,14 +107,8 @@ model = "gpt-4o"
 
 ```toml
 [sandbox]
-mode = "workspace-write"
+mode = "workspace-write"   # "read-only", "workspace-write", "full-access"
 ```
-
-Modes:
-
-- `read-only` - No modifications allowed
-- `workspace-write` - Modify workspace files only
-- `full-access` - No restrictions
 
 ### Gateway Server
 
@@ -63,7 +116,7 @@ Modes:
 [gateway]
 port = 18881
 host = "127.0.0.1"
-token = "my-secret-token"
+token = "my-secret-token"  # omit for auto-generated
 ```
 
 ### Chat Bridges
@@ -76,6 +129,11 @@ bot_token = "..."
 [gateway.bridges.telegram]
 enabled = true
 bot_token = "..."
+
+[gateway.bridges.slack]
+enabled = true
+bot_token = "..."
+signing_secret = "..."
 ```
 
 ### MCP Servers
@@ -86,76 +144,100 @@ command = "node"
 args = ["server.js"]
 ```
 
-## Environment Variables
-
-String values support environment variable expansion:
+### Skills
 
 ```toml
-model = "${SAVFOX_MODEL:-gpt-4o}"
-api_key = "${OPENAI_API_KEY:?API key required}"
+[skills]
+enabled = true
+# paths = ["./custom-skills/"]
 ```
 
-Patterns:
+### Shell Preferences
 
-- `${VAR}` - Use VAR, empty if unset
-- `${VAR:-default}` - Use default if unset
-- `${VAR:?error}` - Fail if unset
+```toml
+[shell]
+# Terminal/shell preferences
+```
+
+### Git Integration
+
+```toml
+[git]
+# Git-related settings
+```
 
 ## CLI Overrides
 
-Override config from the command line:
+Override any config value from the command line with `-c`:
 
 ```bash
-savfox -c model.model=gpt-4o exec "Task"
-savfox -c sandbox.mode=read-only exec "Read only"
+savfox -c model.model=gpt-4o exec "Hello"
+savfox -c sandbox.mode=read-only exec "Read this file"
+savfox -c gateway.port=9090 gateway
 ```
 
-Multiple overrides:
+Multiple overrides can be stacked:
 
 ```bash
-savfox -c model=gpt-4o -c sandbox.mode=full-access exec "Task"
+savfox -c model.model=gpt-4o -c sandbox.mode=full-access exec "Do something"
 ```
 
-## Profiles
+## Configuration Profiles
 
-Use named profiles for different configurations:
+Use named profiles to switch between different configurations:
 
 ```bash
-savfox --profile work exec "Work task"
-savfox -p personal exec "Personal task"
-```
-
-Profile files:
-
-```
-~/.savfox/profiles/work.toml
-~/.savfox/profiles/personal.toml
+savfox --profile work exec "Task for work project"
+savfox --profile personal exec "Personal project task"
+savfox -p oss exec "Use OSS models"
 ```
 
 ## Feature Flags
 
-Control experimental features:
+Feature flags control access to experimental and in-development functionality.
+
+### Stages
+
+- **under-development** — Not yet ready for general use
+- **experimental** — Available but may change
+- **stable** — Production-ready
+- **deprecated** — Will be removed in a future version
+
+### Managing Feature Flags
+
+From the CLI:
 
 ```bash
-savfox features
-savfox features enable <flag>
-savfox features disable <flag>
+savfox features              # list all flags and their status
+savfox features enable <F>   # enable a feature
+savfox features disable <F>  # disable a feature
 ```
 
-## Config Priority
+Or via command-line flags:
 
-Configuration is resolved in order (later overrides earlier):
+```bash
+savfox --enable my-feature exec "Use new feature"
+savfox --disable some-feature exec "Without this feature"
+```
 
-1. System defaults
-2. User config
-3. Workspace config
-4. Profile
-5. CLI overrides
+## Config Layer Priority
+
+Configuration is resolved in this order (later overrides earlier):
+
+1. **System defaults** — Built-in defaults
+2. **User config** — `~/.savfox/config.toml`
+3. **Workspace config** — Project-level `.savfox/config.toml`
+4. **Profile** — Named profile overrides
+5. **CLI overrides** — `-c key=value` flags
+6. **Cloud requirements** — Enterprise/managed settings (if applicable)
 
 ## JSON Schema
 
-Export the schema for editor integration:
+Export the config schema for editor integration:
 
 ```bash
 savfox app-server generate-json-schema -o ./schema
 ```
+
+This produces a JSON Schema file that editors can use for autocompletion and validation of `config.toml`.
+

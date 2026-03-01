@@ -1,8 +1,23 @@
 [
   {
-    "text": "使用指南",
-    "link": "/guide/",
-    "activeMatch": "/guide/"
+    "text": "快速开始",
+    "link": "/start/getting-started",
+    "activeMatch": "/start/"
+  },
+  {
+    "text": "安装",
+    "link": "/install",
+    "activeMatch": "/install/"
+  },
+  {
+    "text": "CLI",
+    "link": "/cli",
+    "activeMatch": "/cli/"
+  },
+  {
+    "text": "网关",
+    "link": "/gateway",
+    "activeMatch": "/gateway/"
   },
   {
     "text": "项目",

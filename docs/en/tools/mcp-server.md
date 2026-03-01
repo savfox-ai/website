@@ -5,138 +5,89 @@ description: 'Model Context Protocol integration with Savfox.'
 
 # MCP Server
 
-Savfox supports the Model Context Protocol (MCP) for integration with Claude Desktop and other MCP clients.
+Savfox can run as an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server, exposing its capabilities as tools that other AI agents and applications can use.
 
-## Overview
+## What is MCP?
 
-MCP allows Savfox to:
+Model Context Protocol is an open standard for connecting AI models to external tools and data sources. By running Savfox as an MCP server, you can integrate it into any MCP-compatible client (Claude Desktop, other AI IDEs, custom agents).
 
-- Act as an MCP server for Claude Desktop
-- Connect to external MCP servers as tools
-- Share context and tools across applications
+## Running the MCP Server
 
-## Running as MCP Server
+```bash
+savfox mcp-server
+```
 
-### Configuration
+This starts an MCP server that communicates over stdio using JSON-RPC 2.0. The server reads requests from stdin and writes responses to stdout.
 
-Add Savfox as an MCP server in Claude Desktop's config:
+## Configuring MCP Clients
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+To use Savfox as a tool in an MCP client, add it to the client's MCP server configuration.
+
+### Example: Claude Desktop
+
+In your Claude Desktop config (`claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
     "savfox": {
       "command": "savfox",
-      "args": ["mcp", "serve"]
+      "args": ["mcp-server"]
     }
   }
 }
 ```
 
-### Available Tools
+### Example: Generic MCP Client
 
-When running as an MCP server, Savfox exposes:
+Any MCP client that supports stdio transport can connect to Savfox:
 
-| Tool              | Description             |
-| ----------------- | ----------------------- |
-| `read_file`       | Read file contents      |
-| `write_file`      | Write to files          |
-| `list_directory`  | List directory contents |
-| `execute_command` | Run shell commands      |
-| `search_files`    | Search for files        |
-| `git_status`      | Git repository status   |
+```json
+{
+  "command": "savfox",
+  "args": ["mcp-server"],
+  "transport": "stdio"
+}
+```
 
-### Capabilities
+## Managing MCP Servers
 
-- Resources: File system access
-- Prompts: Code review, refactoring templates
-- Tools: File operations, shell execution
+Savfox can also act as an MCP **client**, connecting to other MCP servers to extend its own tool capabilities.
 
-## Connecting to MCP Servers
-
-Use external MCP servers as tools in Savfox:
+### Configure MCP Servers in config.toml
 
 ```toml
 [mcp.servers.filesystem]
-command = "mcp-server-filesystem"
-args = ["/path/to/allowed"]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/dir"]
 
 [mcp.servers.github]
-command = "mcp-server-github"
-env = { GITHUB_TOKEN = "${GITHUB_TOKEN}" }
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+env = { GITHUB_PERSONAL_ACCESS_TOKEN = "ghp_..." }
 ```
 
-### Using MCP Tools
-
-MCP tools are automatically available to the agent:
+### Manage via CLI
 
 ```bash
-savfox exec "Use the filesystem server to read README.md"
+savfox mcp          # manage MCP server configurations
 ```
 
-## MCP Configuration
+## Protocol
 
-### Server Options
+The MCP server implements the standard MCP protocol:
 
-```toml
-[mcp]
-enabled = true
+- **Transport**: stdio (stdin/stdout)
+- **Format**: JSON-RPC 2.0
+- **Capabilities**: Tool listing, tool invocation, streaming results
 
-[mcp.server]
-name = "savfox"
-version = "0.1.0"
+When invoked as a tool by an external agent, Savfox can:
+- Execute code analysis and modifications
+- Run commands in sandboxed environments
+- Apply patches and diffs
+- Search and navigate codebases
 
-[mcp.server.capabilities]
-resources = true
-tools = true
-prompts = true
-```
+## Approval Handling
 
-### Client Options
+When the MCP server needs to execute potentially dangerous operations, it follows the configured approval policy. The calling MCP client receives approval requests and can respond programmatically or prompt the user.
 
-```toml
-[mcp.clients.timeout]
-connect = 5000
-request = 30000
-```
-
-## Security Considerations
-
-### Running as Server
-
-When Savfox acts as an MCP server:
-
-- It inherits Claude Desktop's security context
-- File access is scoped to allowed directories
-- Shell commands require approval
-
-### Connecting to Servers
-
-When connecting to external MCP servers:
-
-- Verify the server's authenticity
-- Use environment variables for secrets
-- Limit server capabilities as needed
-
-## Troubleshooting
-
-### Server not appearing in Claude Desktop
-
-1. Check the config file path
-2. Verify the command path is correct
-3. Restart Claude Desktop
-4. Check Claude Desktop logs
-
-### Connection errors
-
-1. Ensure the MCP server is running
-2. Check command and arguments
-3. Verify environment variables
-
-### Tool not working
-
-1. Check tool is enabled
-2. Verify permissions
-3. Check for errors in logs

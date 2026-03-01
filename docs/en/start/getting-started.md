@@ -5,12 +5,10 @@ description: 'Get Savfox installed and run your first session in minutes.'
 
 # Getting Started
 
-Goal: go from zero to a first working session with minimal setup.
-
 ## Prerequisites
 
 - **Rust 1.89+** (if building from source)
-- A supported LLM provider account (OpenAI, Anthropic, or a local provider like Ollama / LM Studio)
+- A supported LLM provider account (OpenAI, or a local provider like Ollama / LM Studio)
 - Git (for session diffs and patch application)
 
 ## Installation
@@ -60,11 +58,12 @@ savfox
 ```
 
 This opens a TUI (terminal user interface) where you can:
-
 - Type messages and chat with the AI agent
 - Review proposed file changes with diffs
 - Approve or reject commands and patches
 - Switch models and personalities
+
+See [Interactive Mode](interactive-mode.md) for details.
 
 ## Your First Non-Interactive Execution
 
@@ -80,41 +79,33 @@ The agent will process your request, propose changes, and output results directl
 savfox exec --json "List all TODO comments in the codebase"
 ```
 
+See [CLI Reference](/cli) for all available commands and options.
+
 ## Quick Tips
 
-Use `--model` or `-m` to specify a different LLM model:
+- Use `--model` or `-m` to specify a different LLM model:
+  ```bash
+  savfox -m gpt-4o exec "Explain this code"
+  ```
 
-```bash
-savfox -m gpt-4o exec "Explain this code"
-```
+- Use `--full-auto` for low-friction automated execution:
+  ```bash
+  savfox --full-auto exec "Refactor the auth module"
+  ```
 
-Use `--full-auto` for low-friction automated execution:
-
-```bash
-savfox --full-auto exec "Refactor the auth module"
-```
-
-Resume a previous session:
-
-```bash
-savfox resume        # interactive picker
-savfox resume --last # resume the most recent session
-```
+- Resume a previous session:
+  ```bash
+  savfox resume        # interactive picker
+  savfox resume --last # resume the most recent session
+  ```
 
 ## Next Steps
 
-<Card title="Interactive Mode" href="/start/interactive-mode" icon="terminal">
-  Learn the TUI features, sessions, and approvals.
-</Card>
+- [Interactive Mode](interactive-mode.md) — Learn the TUI features
+- [CLI Reference](/cli) — All commands and flags
+- [Configuration](/concepts/configuration) — Customize Savfox behavior
+- [Gateway](/gateway) — Remote access and chat bridges
 
-<Card title="CLI Reference" href="/cli" icon="list">
-  All commands and flags.
-</Card>
 
-<Card title="Gateway Server" href="/gateway" icon="server">
-  Remote access and chat bridges.
-</Card>
 
-<Card title="Configuration" href="/concepts/configuration" icon="settings">
-  Customize Savfox behavior.
-</Card>
+

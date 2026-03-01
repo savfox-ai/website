@@ -1,156 +1,221 @@
 ---
 title: 'CLI Reference'
-description: 'Complete command-line interface reference.'
+description: 'Complete command-line reference for Savfox.'
 ---
 
 # CLI Reference
 
-Complete reference for all Savfox CLI commands.
-
 ## Global Options
 
-| Flag                       | Description                    |
-| -------------------------- | ------------------------------ |
-| `-m, --model <MODEL>`      | Specify the LLM model          |
-| `-p, --profile <NAME>`     | Use a named config profile     |
-| `-c, --config <KEY=VALUE>` | Override config values         |
-| `--full-auto`              | Enable full auto-approval mode |
-| `--oss`                    | Use open-source/local models   |
-| `-h, --help`               | Show help                      |
-| `-V, --version`            | Show version                   |
+These options apply to all subcommands:
 
-## Commands
+| Flag | Description |
+|------|-------------|
+| `-m, --model <MODEL>` | Specify the LLM model to use |
+| `-c, --config <KEY=VALUE>` | Override a config value (repeatable) |
+| `-p, --profile <PROFILE>` | Use a named configuration profile |
+| `--oss` | Use open-source local provider (Ollama, LM Studio) |
+| `--search` | Enable web search mode |
+| `--sandbox <MODE>` | Sandbox policy: `read-only`, `workspace-write`, `full-access` |
+| `--ask-for-approval <POLICY>` | Approval policy: `never`, `on-request`, `unless-trusted`, `on-failure` |
+| `--full-auto` | Low-friction mode (`--ask-for-approval on-request --sandbox workspace-write`) |
+| `--yolo` | Skip all confirmations and sandboxing (**dangerous**) |
+| `-C, --cd <DIR>` | Set working directory |
+| `-i, --image <FILE>` | Attach images (comma-separated paths) |
+| `--add-dir <DIR>` | Additional writable directories for sandbox |
+| `--enable <FEATURE>` | Enable a feature flag (repeatable) |
+| `--disable <FEATURE>` | Disable a feature flag (repeatable) |
 
-### savfox
+## Subcommands
 
-Launch interactive TUI:
+### `exec` (alias: `e`)
 
-```bash
-savfox
-savfox -m gpt-4o
-savfox --profile work
-```
-
-### savfox login
-
-Authenticate with an LLM provider:
-
-```bash
-savfox login
-savfox --oss login
-savfox logout
-```
-
-### savfox exec
-
-Run a one-shot task:
+Run a task non-interactively.
 
 ```bash
-savfox exec "Add error handling to src/main.rs"
-savfox e "Explain this function"
-savfox exec --json "List all TODOs"
-savfox -m claude-3-5-sonnet exec "Review this code"
+savfox exec "Add input validation to the signup form"
+savfox e "Explain what this function does"
 ```
 
-Options:
+**Options:**
 
-| Flag          | Description              |
-| ------------- | ------------------------ |
-| `--json`      | Output as JSON           |
-| `--no-stream` | Disable streaming output |
+| Flag | Description |
+|------|-------------|
+| `--json` | Output events as JSONL (one JSON object per line) |
+| `--color <MODE>` | Color output: `auto`, `always`, `never` |
+| `--output-last-message <FILE>` | Save the agent's final message to a file |
+| `--output-schema <FILE>` | JSON Schema file defining expected response shape |
 
-### savfox resume
+### `review`
 
-Resume a previous session:
+Run a non-interactive code review.
 
 ```bash
-savfox resume
-savfox resume --last
-savfox resume <session-id>
+savfox review
+savfox review "Focus on security issues"
 ```
 
-### savfox gateway
+### `resume`
 
-Manage the gateway server:
+Resume a previous interactive session.
 
 ```bash
-savfox gateway
-savfox gateway --port 8080
-savfox gateway --host 0.0.0.0 --port 443 --tls-cert cert.pem --tls-key key.pem
-savfox gateway status
-savfox gateway logs
-savfox gateway logs --follow
+savfox resume              # interactive session picker
+savfox resume --last       # resume the most recent session
+savfox resume <SESSION_ID> # resume a specific session
 ```
 
-Options:
+### `fork`
 
-| Flag                | Default   | Description     |
-| ------------------- | --------- | --------------- |
-| `--host <ADDR>`     | 127.0.0.1 | Bind address    |
-| `--port <PORT>`     | 18881     | Listen port     |
-| `--token <TOKEN>`   | Auto      | Bearer token    |
-| `--tls-cert <PATH>` | -         | TLS certificate |
-| `--tls-key <PATH>`  | -         | TLS private key |
-
-### savfox config
-
-Manage configuration:
+Fork from a previous session to explore a different direction.
 
 ```bash
-savfox config list
-savfox config get model
-savfox config set model gpt-4o
-savfox config convert --to yaml
+savfox fork
 ```
 
-### savfox features
+### `apply` (alias: `a`)
 
-Manage feature flags:
+Apply the most recent agent-generated diff to your working directory using `git apply`.
 
 ```bash
-savfox features
-savfox features enable <flag>
-savfox features disable <flag>
+savfox apply
 ```
 
-### savfox sessions
+### `login` / `logout`
 
-Manage sessions:
+Manage authentication credentials.
 
 ```bash
-savfox sessions list
-savfox sessions delete <id>
-savfox sessions archive <id>
+savfox login       # interactive login flow
+savfox --oss login # login for local OSS providers
+savfox logout      # remove stored credentials
 ```
 
-## Examples
+### `gateway`
 
-### Interactive with specific model
+Start or manage the gateway server for remote access.
 
 ```bash
-savfox -m gpt-4o
+savfox gateway                          # start the server
+savfox gateway --port 8080 --token abc  # custom port and token
+savfox gateway status                   # check server health
+savfox gateway logs --follow            # stream logs
+savfox gateway models                   # list available models
 ```
 
-### Non-interactive with config override
+See [Gateway](/gateway) for full details.
+
+**Management subcommands:**
+
+| Subcommand | Description |
+|------------|-------------|
+| `status` | Check gateway health |
+| `logs [--follow] [--lines N]` | View or stream logs |
+| `models` | List available LLM models |
+| `approvals {list\|approve\|deny}` | Manage execution approvals |
+| `devices {list\|pair\|revoke}` | Manage device pairing |
+| `channels` | Manage chat bridge channels |
+| `nodes` | Manage connected nodes |
+
+### `mcp-server`
+
+Run Savfox as an MCP (Model Context Protocol) server over stdio.
 
 ```bash
-savfox -c sandbox.mode=read-only exec "Analyze this codebase"
+savfox mcp-server
 ```
 
-### Gateway with custom token
+See [MCP Server](/tools/mcp-server) for details.
+
+### `mcp`
+
+Manage MCP server configurations.
 
 ```bash
-savfox gateway --port 9000 --token my-secret-token
+savfox mcp
 ```
 
-### Resume last session
+### `app-server`
+
+Run the app server (JSON-RPC over stdio), used by IDE extensions.
 
 ```bash
-savfox resume --last
+savfox app-server
 ```
 
-### Profile-based execution
+**Code generation subcommands:**
 
 ```bash
-savfox --profile work exec "Review PR #123"
+savfox app-server generate-ts -o ./types       # generate TypeScript bindings
+savfox app-server generate-json-schema -o ./schema  # generate JSON Schema
 ```
+
+### `sandbox`
+
+Run a command under platform-specific sandboxing.
+
+```bash
+savfox sandbox macos <command>    # macOS Seatbelt
+savfox sandbox linux <command>    # Linux Landlock + seccomp
+savfox sandbox windows <command>  # Windows restricted token
+```
+
+See [Sandbox](/security/sandbox) for details.
+
+### `features`
+
+Inspect and manage feature flags.
+
+```bash
+savfox features              # list all feature flags
+savfox features enable <F>   # enable a feature
+savfox features disable <F>  # disable a feature
+```
+
+### `config`
+
+Manage gateway-side configuration via WS-RPC.
+
+```bash
+savfox config validate
+savfox config export --format yaml --output config.yaml
+savfox config convert --to yaml --output config.yaml
+```
+
+### `cloud` (alias: `cloud-tasks`)
+
+**Experimental.** Manage cloud-based tasks.
+
+```bash
+savfox cloud exec "<query>" --env <ENV_ID>  # submit a task
+savfox cloud status <TASK_ID>               # check status
+savfox cloud list                           # list tasks
+savfox cloud apply <TASK_ID>                # apply diff locally
+savfox cloud diff <TASK_ID>                 # show diff
+```
+
+### `completion`
+
+Generate shell completion scripts.
+
+```bash
+savfox completion bash > ~/.bash_completion.d/savfox
+savfox completion zsh > ~/.zfunc/_savfox
+savfox completion fish > ~/.config/fish/completions/savfox.fish
+savfox completion powershell > savfox.ps1
+```
+
+### `acp`
+
+Run ACP bridge over stdio, backed by gateway WS-RPC.
+
+```bash
+savfox acp --gateway-url http://127.0.0.1:18881 --token "$SAVFOX_TOKEN"
+```
+
+See the main Savfox repository docs for a full Zed configuration example.
+
+
+
+
+

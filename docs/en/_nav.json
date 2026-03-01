@@ -1,8 +1,23 @@
 [
   {
-    "text": "Guide",
-    "link": "/guide/",
-    "activeMatch": "/guide/"
+    "text": "Get Started",
+    "link": "/start/getting-started",
+    "activeMatch": "/start/"
+  },
+  {
+    "text": "Install",
+    "link": "/install",
+    "activeMatch": "/install/"
+  },
+  {
+    "text": "CLI",
+    "link": "/cli",
+    "activeMatch": "/cli/"
+  },
+  {
+    "text": "Gateway",
+    "link": "/gateway",
+    "activeMatch": "/gateway/"
   },
   {
     "text": "Projects",

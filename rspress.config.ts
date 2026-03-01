@@ -9,7 +9,7 @@ export default defineConfig({
       title: 'Savfox - AI-Powered Coding Agent for the Terminal',
       type: 'website',
       url: siteUrl,
-      image: 'https://savfox.ai/images/logos/savfox.svg',
+      image: 'https://savfox.ai/images/logos/savfox.png',
       description:
         'Savfox - AI-powered coding agent with chat bridges, gateway server, and multi-platform support',
     }),

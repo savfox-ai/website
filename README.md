@@ -1,58 +1,49 @@
-# Palpo Website
+# Savfox Website
 
-Palpo offical website base on [Rspress](https://rspress.dev/).
+Official documentation website for [Savfox](https://github.com/savfox-ai/savfox), built with [Rspress](https://rspress.dev/).
 
-## Environment Preparation
+The documentation supports both English and Simplified Chinese (`zh-hans`).
 
-This project uses [pnpm](https://pnpm.io/) as the package manager. Before you begin, make sure pnpm is installed:
+## Project Structure
 
-```bash
-# Install pnpm
-npm install -g pnpm
-```
+- `docs/en`: English documentation
+- `docs/zh-hans`: Simplified Chinese documentation
+- `docs/public`: Static assets (logos, icons, images)
+- `utils`: Helper scripts for docs workflows
 
-## Install dependencies
+## Development
 
-Use pnpm to install project dependencies:
+Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-## Project structure
-
-This project contains the following main directories:
-
-- `docs`: Document source file directory, containing all official Palpo documentation
-- `utils`: Utility script directory, various scripts for assisting document generation and maintenance
-
-## Development Guide
-
-Start the development server:
+Start local docs server:
 
 ```bash
 pnpm run dev
 ```
 
-Build the production version:
+Build production docs:
 
 ```bash
 pnpm run build
 ```
 
-Preview the production build locally:
+Preview built docs:
 
 ```bash
 pnpm run preview
 ```
 
-## Contribution Guide
+## Source References
 
-We welcome every developer interested in Palpo to participate in the improvement and improvement of the document. You can contribute by:
+This docs site follows the main Savfox project and draws structure/style inspiration from:
 
-- Submitting bug fixes or documentation updates
-- Improving the content and structure of existing documentation
+- https://github.com/savfox-ai/savfox
+- https://github.com/openclaw/openclaw
 
-Before submitting a contribution, please make sure your changes adhere to the project's style and standards.
+## Contributing
 
-Thank you for supporting the Palpo project!
+Please keep English and Chinese docs aligned for major guide pages.

@@ -2,40 +2,89 @@
 pageType: home
 
 hero:
-  name: Palpo
-  text: 用 Rust 实现的 Matrix 服务器
+  name: Savfox
+  text: AI 驱动的终端编程助手
   image:
-    src: /images/logos/palpo.svg
-  tagline: 为隐私筑一道无声的屏障
+    src: /images/logos/savfox.svg
+  tagline: 多平台编程助手，支持网关、聊天桥接和安全沙箱。
   actions:
     - theme: brand
       text: 快速开始
-      link: /guide/quick-start
-    # - theme: alt
-    #   text: 资助项目
-    #   link: /donate
+      link: /start/getting-started
+    - theme: alt
+      text: CLI 参考
+      link: /cli
+
 features:
-  - title: 什么是 Matrix?
-    details: Matrix 是一个开放的网络，用于安全且去中心化的通信。每个 Matrix 主服务器的用户都可以与所有其他 Matrix 服务器的用户聊天。
-    icon: 🛡️
+  - title: 交互式 + 非交互式
+    details: 通过终端 TUI 进行持续协作，或使用 `savfox exec` 执行一次性任务。
+    icon: terminal
 
-  - title: 技术栈
-    details: 安全的 Rust 实现，使用 postgres 作为数据库。
-    icon: ❤️
+  - title: 网关 + 聊天桥接
+    details: 通过 HTTP/WebSocket 暴露 Savfox，并接入 Discord、Telegram、Slack、Matrix。
+    icon: network
 
-  - title: 我们的目标是什么?
-    details: 一个符合 Matrix 标准的稳定且快速的 Matrix 服务器。
-    icon: 🚀
-
-  - title: 我可以尝试一下吗？
-    details: 是的，您可以通过打开支持注册令牌的客户端（例如在 palpo.im 主服务器上注册的 Element web）来测试我们的 Palpo 实例。
-    icon: 🚀
-
-  - title: 当前状态是什么？
-    details: 快速迭代开发，大多数功能已经可用。
-    icon: 🧭
-
-  - title: 如何部署我自己的实例？
-    details: 您可以轻松地在自己的服务器或云服务器上部署它。
-    icon: 🔌
+  - title: 默认安全
+    details: 结合审批流程、工作区沙箱和 macOS/Linux/Windows 原生隔离能力。
+    icon: shield
 ---
+
+## 快速路径
+
+<Steps>
+  <Step title="安装">
+
+```bash
+git clone https://github.com/savfox-ai/savfox.git
+cd savfox
+cargo install --path crates/savfox-cli
+```
+
+  </Step>
+  <Step title="登录">
+
+```bash
+savfox login
+```
+
+  </Step>
+  <Step title="运行">
+
+```bash
+savfox
+```
+
+  </Step>
+</Steps>
+
+## 文档入口
+
+<Columns>
+  <Card title="快速开始" href="/start/getting-started" icon="rocket">
+    安装并运行第一个会话。
+  </Card>
+  <Card title="安装" href="/install" icon="download">
+    源码、Docker 和部署方案。
+  </Card>
+  <Card title="CLI 参考" href="/cli" icon="terminal">
+    命令、参数与示例。
+  </Card>
+  <Card title="网关" href="/gateway" icon="server">
+    远程 API、会话和桥接运行时。
+  </Card>
+  <Card title="模型提供商" href="/providers" icon="cpu">
+    OpenAI、Anthropic、Ollama 配置。
+  </Card>
+  <Card title="安全" href="/security" icon="shield">
+    沙箱、审批和令牌访问。
+  </Card>
+</Columns>
+
+## 生态项目
+
+- 主项目：[savfox-ai/savfox](https://github.com/savfox-ai/savfox)
+- 参考项目：[openclaw/openclaw](https://github.com/openclaw/openclaw)
+
+## 许可证
+
+Apache License 2.0

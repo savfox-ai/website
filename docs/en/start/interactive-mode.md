@@ -1,141 +1,99 @@
 ---
 title: 'Interactive Mode'
-description: 'Learn the TUI features, sessions, and approval workflows.'
+description: 'Use Savfox in interactive terminal UI mode.'
 ---
 
 # Interactive Mode
 
-The interactive terminal UI (TUI) is the primary way to use Savfox for coding tasks.
+When you run `savfox` without a subcommand, it launches a ratatui-based terminal user interface for interactive sessions with the AI agent.
 
-## Launching the TUI
-
-```bash
-savfox
-```
-
-This opens a rich terminal interface with:
-
-- Chat input area
-- Message history with markdown rendering
-- Diff preview for file changes
-- Approval controls for commands and patches
-
-## TUI Features
-
-### Chat Interface
-
-Type your requests naturally and the agent responds with:
-
-- Explanations and analysis
-- Code snippets with syntax highlighting
-- File diffs showing proposed changes
-- Shell commands to execute
-
-### Diff Preview
-
-When the agent proposes file changes:
-
-- View unified diffs with syntax highlighting
-- See additions (green) and deletions (red)
-- Review the full context of changes
-
-### Approval Workflow
-
-For safety, Savfox asks for approval before:
-
-- Executing shell commands
-- Writing to files
-- Applying patches
-
-Use keyboard shortcuts or click to:
-
-- **Approve** - Allow the action
-- **Reject** - Deny the action
-- **Edit** - Modify before approving
-
-### Session Management
-
-Sessions are automatically saved. You can:
-
-- Resume previous sessions
-- Fork a session to try different approaches
-- Archive sessions you no longer need
-
-## Keyboard Shortcuts
-
-| Key      | Action                   |
-| -------- | ------------------------ |
-| `Enter`  | Send message             |
-| `Ctrl+C` | Cancel current operation |
-| `Ctrl+D` | Exit                     |
-| `?`      | Show help                |
-| `Tab`    | Navigate between panels  |
-
-## Model Selection
-
-Switch models mid-session:
+## Launching
 
 ```bash
-# In the TUI, use commands like:
-/model gpt-4o
-/model claude-3-5-sonnet
-/model ollama:llama3
+savfox                    # start a new session
+savfox resume             # pick a previous session to resume
+savfox resume --last      # resume the most recent session
+savfox fork               # fork from a previous session
 ```
 
-Or start with a specific model:
+## Interface Overview
+
+The TUI provides:
+
+- **Chat composer** — Type messages and send them to the agent
+- **Markdown rendering** — Agent responses are rendered with syntax highlighting
+- **Diff display** — Proposed file changes shown as unified diffs
+- **Approval modals** — Accept or reject commands and file edits
+- **Status indicators** — Loading animations and progress feedback
+
+## Session Management
+
+### Resume
+
+Continue a previous conversation where you left off:
+
+```bash
+savfox resume             # shows an interactive session picker
+savfox resume --last      # resume the most recent session
+savfox resume <SESSION_ID>
+```
+
+### Fork
+
+Branch from a previous session to explore alternative approaches:
+
+```bash
+savfox fork               # shows a session picker, then forks
+```
+
+### Archive
+
+Sessions are stored locally and can be archived or listed through the TUI.
+
+## Approval Workflow
+
+When the agent wants to execute a command or modify a file, Savfox presents an approval modal:
+
+- **Command execution** — Review the command before it runs
+- **File changes** — Review the diff before it's applied
+
+You can approve or decline each action. The approval policy can be configured globally:
+
+```bash
+savfox --ask-for-approval unless-trusted   # default: ask unless command is trusted
+savfox --ask-for-approval never            # auto-approve everything (use with sandbox)
+savfox --ask-for-approval on-failure       # only ask when something fails
+```
+
+## Model and Personality Selection
+
+From the TUI, you can:
+
+- Switch between available LLM models
+- Select different agent personalities / collaboration modes
+- Configure via overlays accessible from the interface
+
+Or set the model from the command line:
 
 ```bash
 savfox -m gpt-4o
+savfox --oss           # use local models (Ollama, LM Studio)
 ```
 
-## Session Commands
+## Slash Commands
 
-Within the TUI, you can use special commands:
+The interactive mode supports slash commands for quick actions. Type `/` in the chat composer to see available commands.
 
-| Command         | Description              |
-| --------------- | ------------------------ |
-| `/help`         | Show available commands  |
-| `/model <name>` | Switch LLM model         |
-| `/clear`        | Clear the conversation   |
-| `/save`         | Save current session     |
-| `/fork`         | Fork the current session |
-| `/exit`         | Exit the TUI             |
+## Keyboard Shortcuts
 
-## Resume Sessions
+The TUI uses standard terminal keybindings. Navigation and input follow typical terminal conventions.
 
-From the command line:
+## Tips
 
-```bash
-savfox resume        # Interactive session picker
-savfox resume --last # Resume most recent session
-savfox resume <id>   # Resume specific session
-```
+- Use `Ctrl+C` to interrupt a running agent turn
+- Sessions persist automatically — you can always resume later
+- Attach images to your message with `-i`:
+  ```bash
+  savfox -i screenshot.png
+  ```
 
-## Approval Modes
-
-Control how approvals work:
-
-```bash
-# Require approval for everything (default)
-savfox --approval-mode interactive
-
-# Auto-approve safe operations
-savfox --approval-mode auto-safe
-
-# Full auto mode (use with caution)
-savfox --full-auto
-```
-
-## Next Steps
-
-<Card title="CLI Reference" href="/cli" icon="list">
-  All commands and flags.
-</Card>
-
-<Card title="Sandbox & Security" href="/security/sandbox" icon="shield">
-  Understand sandbox modes.
-</Card>
-
-<Card title="Configuration" href="/concepts/configuration" icon="settings">
-  Customize behavior.
-</Card>

@@ -1,144 +1,114 @@
 ---
 title: 'Sandbox'
-description: 'Sandbox modes and configuration.'
+description: 'Sandbox policies and security controls.'
 ---
 
-# Sandbox
+# Sandbox and Security
 
-The sandbox protects your system by controlling what the agent can do.
+Savfox provides multi-layered sandboxing to control what the AI agent can do on your system. This ensures safe execution of agent-generated commands and file operations.
 
-## Modes
+## Sandbox Modes
 
-### Read-Only
-
-Maximum protection. The agent cannot modify anything:
-
-```toml
-[sandbox]
-mode = "read-only"
-```
-
-Allowed:
-
-- Read files
-- List directories
-- Execute read-only commands
-
-Blocked:
-
-- Write files
-- Delete files
-- Modify system state
-
-### Workspace-Write
-
-Recommended for development. The agent can modify workspace files:
-
-```toml
-[sandbox]
-mode = "workspace-write"
-```
-
-The workspace is typically your current project directory.
-
-### Full-Access
-
-No restrictions. Use with extreme caution:
-
-```toml
-[sandbox]
-mode = "full-access"
-```
-
-Only use when you trust the agent completely.
-
-## Platform Implementation
-
-### macOS
-
-Uses Seatbelt (sandbox-exec):
-
-```xml
-<key>com.apple.security.temporary-exception.files.read-only</key>
-<array>
-    <string>/path/to/allowed</string>
-</array>
-```
-
-### Linux
-
-Uses Landlock LSM:
-
-```rust
-AccessFs::from_read() | AccessFs::from_write()
-```
-
-### Windows
-
-Uses restricted tokens with limited privileges.
-
-## Approval Integration
-
-The sandbox works with the approval system:
-
-```toml
-[approvals]
-# Always require approval for shell commands
-require_for_shell = true
-
-# Auto-approve safe file writes in workspace
-auto_approve_safe_writes = true
-```
-
-## Command Filtering
-
-Restrict which commands can be executed:
-
-```toml
-[sandbox]
-allowed_commands = ["git", "npm", "cargo"]
-blocked_commands = ["rm -rf", "sudo"]
-```
-
-## Path Restrictions
-
-Define allowed paths:
-
-```toml
-[sandbox]
-allowed_paths = [
-    "/home/user/projects",
-    "/tmp/savfox"
-]
-blocked_paths = [
-    "/etc",
-    "/var"
-]
-```
-
-## CLI Usage
+Set the sandbox mode with `--sandbox`:
 
 ```bash
-# Run with read-only sandbox
-savfox --sandbox read-only exec "Analyze code"
-
-# Run with workspace-write (default)
-savfox exec "Refactor code"
-
-# Run with full access
-savfox --full-auto exec "Do anything"
+savfox --sandbox read-only exec "Analyze this codebase"
+savfox --sandbox workspace-write exec "Refactor the auth module"
+savfox --sandbox full-access exec "Install dependencies and build"
 ```
 
-## Troubleshooting
+| Mode | Description |
+|------|-------------|
+| `read-only` | No file system writes allowed |
+| `workspace-write` | Write only to the workspace directory (`.git` and `.savfox` are read-only) |
+| `full-access` | Unrestricted file system access |
 
-### Permission denied
+## Approval Policies
 
-1. Check sandbox mode
-2. Verify file is in allowed paths
-3. Approve the action when prompted
+Control when the agent asks for your approval before executing actions:
 
-### Command blocked
+```bash
+savfox --ask-for-approval unless-trusted exec "Do something"
+```
 
-1. Check if command is in blocked list
-2. Add to allowed_commands if needed
-3. Use approval workflow
+| Policy | Description |
+|--------|-------------|
+| `unless-trusted` | Ask unless the command is in the trusted list (default) |
+| `on-request` | Ask only when the agent explicitly requests approval |
+| `on-failure` | Ask only when a command fails |
+| `never` | Auto-approve all actions (use with sandbox restrictions) |
+
+## Convenience Modes
+
+### Full Auto
+
+Combines a relaxed approval policy with workspace-write sandboxing:
+
+```bash
+savfox --full-auto exec "Refactor the database module"
+```
+
+Equivalent to `--ask-for-approval on-request --sandbox workspace-write`.
+
+### Bypass Mode (Dangerous)
+
+Skips all confirmations and sandboxing. **Use only in trusted, isolated environments:**
+
+```bash
+savfox --yolo exec "Do whatever is needed"
+```
+
+This flag is intentionally named to remind you of the risk.
+
+## Platform-Specific Sandboxing
+
+Savfox supports native OS sandbox mechanisms for stronger isolation:
+
+### macOS — Seatbelt
+
+Uses Apple's `sandbox-exec` to enforce sandboxing at the OS level:
+
+```bash
+savfox sandbox macos <command>
+# alias:
+savfox sandbox seatbelt <command>
+```
+
+### Linux — Landlock + seccomp
+
+Uses Linux kernel security modules for fine-grained access control:
+
+```bash
+savfox sandbox linux <command>
+# alias:
+savfox sandbox landlock <command>
+```
+
+### Windows — Restricted Token
+
+Uses Windows restricted tokens to limit process privileges:
+
+```bash
+savfox sandbox windows <command>
+```
+
+## Additional Writable Directories
+
+When using `workspace-write` mode, you can grant write access to additional directories:
+
+```bash
+savfox --sandbox workspace-write --add-dir /tmp/output exec "Generate reports to /tmp/output"
+```
+
+## Best Practices
+
+1. **Default to `workspace-write`** — It prevents accidental modifications outside your project while allowing the agent to work effectively.
+
+2. **Use `read-only` for analysis** — When you only need the agent to read and explain code, use read-only mode for maximum safety.
+
+3. **Combine `never` approval with sandbox** — If you want hands-free execution, pair `--ask-for-approval never` with a restrictive sandbox mode rather than using `--yolo`.
+
+4. **Use platform sandbox for untrusted tasks** — The `sandbox` subcommand provides OS-level isolation that is stronger than the built-in policy checks.
+
+5. **Review approvals in gateway mode** — When running the gateway server, use `savfox gateway approvals list` to review pending approvals from remote clients.
+
