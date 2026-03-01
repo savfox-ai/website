@@ -1,5 +1,10 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig } from '@rspress/core';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const siteUrl = 'https://savfox.ai/';
 
@@ -17,6 +22,7 @@ export default defineConfig({
   root: 'docs',
   title: 'Savfox',
   lang: 'en',
+  globalStyles: path.join(__dirname, 'docs/styles/theme.css'),
   locales: [
     {
       lang: 'en',
