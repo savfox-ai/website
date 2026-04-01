@@ -82,7 +82,7 @@ export default defineConfig({
       filterNoResultText: 'No matching API found',
     },
     footer: {
-      message: 'Apache 2.0 Licensed | Copyright © 2024-present Savfox Team',
+      message: 'Apache 2.0 Licensed | Copyright © 2026-present Savfox Team',
     },
     socialLinks: [
       {
