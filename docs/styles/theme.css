@@ -1,29 +1,29 @@
-/* ============== Savfox Orange Theme ============== */
-/* Based on savfox-dixous color scheme */
+/* ============== Savfox Coral Theme ============== */
+/* Synced with gateway-dioxus color scheme */
 
 :root {
-  /* Primary Orange Accent Colors */
-  --rp-c-brand: #ff5722;
-  --rp-c-brand-light: #ff7043;
-  --rp-c-brand-dark: #e64a19;
-  --rp-c-brand-tint: rgba(255, 87, 34, 0.15);
+  /* Primary Brand Colors — matches light theme accent */
+  --rp-c-brand: #d85d68;
+  --rp-c-brand-light: #ef6b6f;
+  --rp-c-brand-dark: #be4b58;
+  --rp-c-brand-tint: rgba(216, 93, 104, 0.12);
 
   /* Text Colors */
-  --rp-c-text-1: #1a1a1a;
-  --rp-c-text-2: #555;
-  --rp-c-text-3: #888;
+  --rp-c-text-1: #372127;
+  --rp-c-text-2: #7e585f;
+  --rp-c-text-3: #ab838a;
 
   /* Background Colors */
-  --rp-c-bg: #ffffff;
-  --rp-c-bg-soft: #f5f5f5;
-  --rp-c-bg-mute: #eaeaea;
-  --rp-c-bg-alt: #fafafa;
+  --rp-c-bg: #fff7f4;
+  --rp-c-bg-soft: #fffdfb;
+  --rp-c-bg-mute: #fff0e9;
+  --rp-c-bg-alt: #ffe6dc;
 
   /* Border Colors */
-  --rp-c-border: #d0d0d0;
-  --rp-c-divider: #e5e5e5;
+  --rp-c-border: #efc7bc;
+  --rp-c-divider: #f5ddd4;
 
-  /* Other Colors */
+  /* Status Colors */
   --rp-c-success: #16a34a;
   --rp-c-warning: #ca8a04;
   --rp-c-danger: #dc2626;
@@ -31,28 +31,28 @@
 
 /* Dark Mode */
 .dark {
-  /* Primary Orange Accent Colors */
-  --rp-c-brand: #ff5722;
-  --rp-c-brand-light: #ff7043;
-  --rp-c-brand-dark: #e64a19;
-  --rp-c-brand-tint: rgba(255, 87, 34, 0.15);
+  /* Primary Brand Colors — matches dark theme accent */
+  --rp-c-brand: #ef6b6f;
+  --rp-c-brand-light: #ff9a6c;
+  --rp-c-brand-dark: #dd5a61;
+  --rp-c-brand-tint: rgba(239, 107, 111, 0.15);
 
   /* Text Colors */
-  --rp-c-text-1: #e5e5e5;
-  --rp-c-text-2: #999;
-  --rp-c-text-3: #666;
+  --rp-c-text-1: #fff6f1;
+  --rp-c-text-2: #ecd0c7;
+  --rp-c-text-3: #c29ca2;
 
   /* Background Colors */
-  --rp-c-bg: #0a0a0a;
-  --rp-c-bg-soft: #141414;
-  --rp-c-bg-mute: #1e1e1e;
-  --rp-c-bg-alt: #111111;
+  --rp-c-bg: #11090d;
+  --rp-c-bg-soft: #1a0f15;
+  --rp-c-bg-mute: #27171f;
+  --rp-c-bg-alt: #1a0f15;
 
   /* Border Colors */
-  --rp-c-border: #2e2e2e;
-  --rp-c-divider: #252525;
+  --rp-c-border: #36202a;
+  --rp-c-divider: #27171f;
 
-  /* Other Colors */
+  /* Status Colors */
   --rp-c-success: #22c55e;
   --rp-c-warning: #eab308;
   --rp-c-danger: #ef4444;
@@ -61,30 +61,39 @@
 /* Additional Theme Enhancements */
 :root {
   /* Links */
-  --rp-c-link: #ff5722;
-  --rp-c-link-hover: #e64a19;
+  --rp-c-link: #d85d68;
+  --rp-c-link-hover: #be4b58;
 
   /* Code */
-  --rp-c-code-bg: rgba(255, 87, 34, 0.1);
-  --rp-c-code-text: #ff5722;
+  --rp-c-code-bg: rgba(216, 93, 104, 0.08);
+  --rp-c-code-text: #c45360;
 
   /* Sidebar */
   --rp-sidebar-c-bg: var(--rp-c-bg-soft);
-  --rp-sidebar-c-text-active: #ff5722;
+  --rp-sidebar-c-text-active: #d85d68;
 
   /* Navbar */
   --rp-navbar-c-bg: var(--rp-c-bg);
   --rp-navbar-c-border: var(--rp-c-border);
 
-  /* Buttons */
-  --rp-button-c-brand: #ff5722;
-  --rp-button-c-brand-hover: #e64a19;
-  --rp-button-c-brand-active: #bf360c;
+  /* Buttons — gradient matches gateway-dioxus button-primary-surface */
+  --rp-button-c-brand: #d85d68;
+  --rp-button-c-brand-hover: #c45360;
+  --rp-button-c-brand-active: #be4b58;
 }
 
 .dark {
-  --rp-c-code-bg: rgba(255, 87, 34, 0.15);
-  --rp-c-code-text: #ff7043;
+  --rp-c-link: #ef6b6f;
+  --rp-c-link-hover: #ff9a6c;
+
+  --rp-c-code-bg: rgba(239, 107, 111, 0.12);
+  --rp-c-code-text: #ff9a6c;
+
+  --rp-sidebar-c-text-active: #ef6b6f;
+
+  --rp-button-c-brand: #ef6b6f;
+  --rp-button-c-brand-hover: #dd5a61;
+  --rp-button-c-brand-active: #c45360;
 }
 
 /* Custom Component Styles */
@@ -101,15 +110,28 @@ a:hover {
 button[class*='brand'],
 .btn-primary,
 [class*='Button'][class*='brand'] {
-  background-color: var(--rp-c-brand) !important;
+  background: linear-gradient(135deg, #f59669 0%, #d85d68 58%, #be4b58 100%) !important;
   border-color: var(--rp-c-brand) !important;
+  color: #fff !important;
 }
 
 button[class*='brand']:hover,
 .btn-primary:hover,
 [class*='Button'][class*='brand']:hover {
-  background-color: var(--rp-c-brand-dark) !important;
+  background: linear-gradient(135deg, #e8857a 0%, #d8636a 58%, #c45360 100%) !important;
   border-color: var(--rp-c-brand-dark) !important;
+}
+
+.dark button[class*='brand'],
+.dark .btn-primary,
+.dark [class*='Button'][class*='brand'] {
+  background: linear-gradient(135deg, #e8857a 0%, #d8636a 58%, #c45360 100%) !important;
+}
+
+.dark button[class*='brand']:hover,
+.dark .btn-primary:hover,
+.dark [class*='Button'][class*='brand']:hover {
+  background: linear-gradient(135deg, #ef6b6f 0%, #dd5a61 50%, #c45360 100%) !important;
 }
 
 /* Code Inline Styles */
@@ -137,6 +159,6 @@ code {
 
 /* Selection */
 ::selection {
-  background-color: rgba(255, 87, 34, 0.3);
+  background-color: rgba(239, 107, 111, 0.3);
   color: inherit;
 }
