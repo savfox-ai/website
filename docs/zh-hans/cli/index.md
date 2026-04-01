@@ -184,6 +184,16 @@ savfox cloud apply <TASK_ID>                # 本地应用 diff
 savfox cloud diff <TASK_ID>                 # 查看 diff
 ```
 
+### `config`
+
+管理网关端配置（通过 WS-RPC）。
+
+```bash
+savfox config validate
+savfox config export --format yaml --output config.yaml
+savfox config convert --to yaml --output config.yaml
+```
+
 ### `completion`
 
 生成 Shell 自动补全脚本。
@@ -195,6 +205,15 @@ savfox completion fish > ~/.config/fish/completions/savfox.fish
 savfox completion powershell > savfox.ps1
 ```
 
+### `acp`
+
+运行 ACP 桥接（通过 stdio），后端连接网关 WS-RPC。
+
+```bash
+savfox acp --gateway-url http://127.0.0.1:18881 --token "$SAVFOX_TOKEN"
+```
+
+详见 Savfox 仓库文档中的 Zed 配置示例。
 
 
 

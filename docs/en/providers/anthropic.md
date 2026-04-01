@@ -25,32 +25,32 @@ export ANTHROPIC_API_KEY=sk-ant-...
 
 ## Available Models
 
-| Model                      | Description     | Best For          |
-| -------------------------- | --------------- | ----------------- |
-| claude-3-5-sonnet-20241022 | Latest Sonnet   | Coding, analysis  |
-| claude-3-opus-20240229     | Most capable    | Complex reasoning |
-| claude-3-haiku-20240307    | Fast, efficient | Quick tasks       |
+| Model                        | Description          | Best For              |
+| ---------------------------- | -------------------- | --------------------- |
+| claude-sonnet-4-20250514     | Latest Sonnet        | Coding, analysis      |
+| claude-opus-4-20250514       | Most capable         | Complex reasoning     |
+| claude-haiku-4-5-20251001    | Fast, efficient      | Quick tasks           |
 
 ## Configuration
 
 ```toml
 [model]
 provider_id = "anthropic"
-model = "claude-3-5-sonnet-20241022"
+model = "claude-sonnet-4-20250514"
 
 [model.anthropic]
-max_tokens = 4096
-temperature = 0.7
+max_tokens = 16384
+temperature = 1.0
 ```
 
 ## CLI Usage
 
 ```bash
-# Use Claude 3.5 Sonnet
-savfox -m claude-3-5-sonnet-20241022 exec "Review this code"
+# Use Claude Sonnet 4
+savfox -m claude-sonnet-4-20250514 exec "Review this code"
 
-# Use Claude 3 Opus
-savfox -m claude-3-opus-20240229 exec "Complex analysis"
+# Use Claude Opus 4
+savfox -m claude-opus-4-20250514 exec "Complex analysis"
 ```
 
 ## Extended Thinking
@@ -67,6 +67,23 @@ This enables Claude to "think" before responding, improving accuracy on complex 
 ## Tool Use
 
 Claude has native tool use support. Savfox automatically configures tools when using Claude.
+
+## Vertex AI (Anthropic)
+
+Use Claude models via Google Cloud Vertex AI:
+
+```toml
+[model]
+provider_id = "google-vertex-anthropic"
+model = "claude-sonnet-4-20250514"
+```
+
+Set the required environment variables:
+
+```bash
+export GOOGLE_VERTEX_PROJECT=your-project-id
+export GOOGLE_VERTEX_LOCATION=us-east5
+```
 
 ## Troubleshooting
 

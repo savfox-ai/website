@@ -17,7 +17,7 @@ Available tags:
 
 - `latest` - Latest stable release
 - `main` - Latest main branch build
-- `v0.1.0` - Specific version tags
+- `v0.3.0` - Specific version tags
 
 ## Basic Usage
 
@@ -64,8 +64,6 @@ docker run -d \
 Complete setup with gateway:
 
 ```yaml
-version: '3.8'
-
 services:
   savfox:
     image: ghcr.io/savfox-ai/savfox:latest
@@ -85,8 +83,8 @@ services:
 Start:
 
 ```bash
-docker-compose up -d
-docker-compose logs -f
+docker compose up -d
+docker compose logs -f
 ```
 
 ## Environment Variables
@@ -100,7 +98,7 @@ docker-compose logs -f
 ## Building Custom Image
 
 ```dockerfile
-FROM rust:1.89 AS builder
+FROM rust:1.94 AS builder
 WORKDIR /app
 COPY . .
 RUN cargo build --release -p savfox-cli

@@ -7,7 +7,7 @@ description: '安装 Savfox 并运行第一个会话。'
 
 ## 前置要求
 
-- **Rust 1.89+**（从源码构建时需要）
+- **Rust 1.94+**（从源码构建时需要）
 - 支持的 LLM 提供商账号（OpenAI，或本地提供商如 Ollama / LM Studio）
 - Git（用于会话 diff 和补丁应用）
 

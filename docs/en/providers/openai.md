@@ -33,12 +33,15 @@ export OPENAI_API_KEY=sk-...
 
 ## Available Models
 
-| Model         | Description           | Best For              |
-| ------------- | --------------------- | --------------------- |
-| gpt-4o        | Latest flagship model | Complex tasks, coding |
-| gpt-4o-mini   | Fast, cost-effective  | Quick tasks           |
-| gpt-4-turbo   | Previous generation   | General use           |
-| gpt-3.5-turbo | Fast, cheap           | Simple tasks          |
+| Model         | Description                 | Best For              |
+| ------------- | --------------------------- | --------------------- |
+| gpt-4.1       | Latest flagship model       | Complex tasks, coding |
+| gpt-4.1-mini  | Fast, cost-effective        | Quick tasks           |
+| gpt-4.1-nano  | Smallest, fastest           | Simple tasks          |
+| o3            | Reasoning model             | Complex reasoning     |
+| o4-mini       | Fast reasoning model        | Balanced reasoning    |
+| gpt-4o        | Previous flagship           | General use           |
+| gpt-4o-mini   | Previous fast model         | Quick tasks           |
 
 ## Configuration
 
@@ -55,11 +58,14 @@ max_tokens = 4096
 ## CLI Usage
 
 ```bash
-# Use GPT-4o
-savfox -m gpt-4o exec "Refactor this code"
+# Use GPT-4.1
+savfox -m gpt-4.1 exec "Refactor this code"
 
-# Use GPT-4o-mini
-savfox -m gpt-4o-mini exec "Quick task"
+# Use GPT-4.1-mini
+savfox -m gpt-4.1-mini exec "Quick task"
+
+# Use o3 for complex reasoning
+savfox -m o3 exec "Analyze this architecture"
 ```
 
 ## Azure OpenAI

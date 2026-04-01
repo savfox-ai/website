@@ -22,7 +22,7 @@ provider = "ollama"
 [model]
 provider_id = "ollama"
 model = "llama3.2"
-base_url = "http://localhost:11434"
+base_url = "http://localhost:11434/v1"
 ```
 
 ## Available Models
@@ -31,6 +31,7 @@ base_url = "http://localhost:11434"
 | -------------- | ---------- | ----------------------- |
 | llama3.2       | 3B/1B      | Meta's latest Llama     |
 | llama3.1       | 8B/70B     | Previous generation     |
+| qwen2.5        | 7B/14B/72B | Alibaba Qwen model      |
 | mistral        | 7B         | Mistral AI model        |
 | codellama      | 7B/13B/34B | Code-focused Llama      |
 | deepseek-coder | 6.7B       | Code generation         |
@@ -58,7 +59,7 @@ savfox --oss exec "Task"
 
 ```toml
 [model.ollama]
-base_url = "http://localhost:11434"
+base_url = "http://localhost:11434/v1"
 temperature = 0.7
 num_ctx = 4096
 num_gpu = 1

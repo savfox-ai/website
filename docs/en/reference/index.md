@@ -39,7 +39,7 @@ Response:
 
 ```json
 {
-  "version": "0.1.0",
+  "version": "0.3.0",
   "uptime": 3600,
   "sessions": 5,
   "connections": 2
@@ -197,6 +197,12 @@ JSON-RPC 2.0 format:
 | `cron.remove` | Remove job  |
 | `cron.run`    | Run job now |
 | `cron.runs`   | List runs   |
+
+#### Models
+
+| Method        | Description  |
+| ------------- | ------------ |
+| `models.list` | List models  |
 
 ### Events
 

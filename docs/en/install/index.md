@@ -19,7 +19,7 @@ cargo install --path crates/savfox-cli
 
 **Prerequisites:**
 
-- Rust 1.89 or newer
+- Rust 1.94 or newer
 - Git
 
 ## Docker
@@ -42,10 +42,9 @@ docker run -it \
 
 ## Docker Compose
 
-Create a `docker-compose.yml`:
+Create a `compose.yml`:
 
 ```yaml
-version: '3.8'
 services:
   savfox:
     image: ghcr.io/savfox-ai/savfox:latest
@@ -60,7 +59,7 @@ services:
 Run with:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Binary Releases

@@ -7,7 +7,7 @@ description: 'Get Savfox installed and run your first session in minutes.'
 
 ## Prerequisites
 
-- **Rust 1.89+** (if building from source)
+- **Rust 1.94+** (if building from source)
 - A supported LLM provider account (OpenAI, or a local provider like Ollama / LM Studio)
 - Git (for session diffs and patch application)
 

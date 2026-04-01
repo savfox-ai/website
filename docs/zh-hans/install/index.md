@@ -19,7 +19,7 @@ cargo install --path crates/savfox-cli
 
 **前提条件：**
 
-- Rust 1.89 或更新版本
+- Rust 1.94 或更新版本
 - Git
 
 ## Docker
@@ -42,10 +42,9 @@ docker run -it \
 
 ## Docker Compose
 
-创建 `docker-compose.yml`：
+创建 `compose.yml`：
 
 ```yaml
-version: '3.8'
 services:
   savfox:
     image: ghcr.io/savfox-ai/savfox:latest
@@ -60,7 +59,21 @@ services:
 运行：
 
 ```bash
-docker-compose up -d
+docker compose up -d
+```
+
+## 预编译二进制文件
+
+从 GitHub Releases 下载预编译的二进制文件：
+
+```bash
+# Linux/macOS
+curl -sSL https://github.com/savfox-ai/savfox/releases/latest/download/savfox-$(uname -s)-$(uname -m) -o savfox
+chmod +x savfox
+sudo mv savfox /usr/local/bin/
+
+# Windows (PowerShell)
+Invoke-WebRequest -Uri "https://github.com/savfox-ai/savfox/releases/latest/download/savfox-windows-x86_64.exe" -OutFile "savfox.exe"
 ```
 
 ## 验证安装
