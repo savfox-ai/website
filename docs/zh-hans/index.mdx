@@ -2,89 +2,68 @@
 pageType: home
 
 hero:
+  badge:
+    text: 终端原生 · 网关就绪 · 安全优先
+    link: /gateway
   name: Savfox
-  text: AI 驱动的终端编程助手
+  text: |
+    在终端里飞快写代码。
+    把代理能力扩到整个团队。
   image:
     src: /images/logos/savfox.svg
-  tagline: 多平台编程助手，支持网关、聊天桥接和安全沙箱。
+    alt: Savfox 标志
+  tagline: 一个二进制，覆盖交互式编程、一次性执行、HTTP 和 WebSocket API、聊天桥接，以及带策略控制的自动化，macOS、Linux、Windows 都能跑。
   actions:
     - theme: brand
       text: 快速开始
       link: /start/getting-started
     - theme: alt
-      text: CLI 参考
-      link: /cli
+      text: 了解网关
+      link: /gateway
+    - theme: alt
+      text: 配置提供商
+      link: /providers
 
 features:
-  - title: 交互式 + 非交互式
-    details: 通过终端 TUI 进行持续协作，或使用 `savfox exec` 执行一次性任务。
+  - title: 终端原生工作流
+    details: 需要探索时就留在交互式 TUI，需要稳定复用时就切到 `savfox exec`，同一套能力既适合个人，也适合自动化。
     icon: terminal
+    link: /start/getting-started
+    span: 6
 
-  - title: 网关 + 聊天桥接
-    details: 通过 HTTP/WebSocket 暴露 Savfox，并接入 Discord、Telegram、Slack、Matrix。
-    icon: network
+  - title: 网关 + 远程会话
+    details: 通过 HTTP 与 WebSocket 暴露 Savfox，拿到会话控制、审批、日志和集成入口，真正像基础设施，而不是演示玩具。
+    icon: server
+    link: /gateway
+    span: 6
 
-  - title: 默认安全
-    details: 结合审批流程、工作区沙箱和 macOS/Linux/Windows 原生隔离能力。
+  - title: 真能落地的聊天桥接
+    details: 把同一个代理接进 Discord、Telegram、Slack、Matrix，让团队在原本协作的地方直接发起工作。
+    icon: send
+    link: /channels
+    span: 4
+
+  - title: 模型提供商足够自由
+    details: OpenAI、Anthropic、Google、Ollama，以及大量 OpenAI 兼容端点，都能接入同一套工作流，不用反复改使用方式。
+    icon: cpu
+    link: /providers
+    span: 4
+
+  - title: 有牙齿的安全策略
+    details: 审批、工作区沙箱和平台原生隔离能力一起上，自动化既能放权，也不会彻底失控。
     icon: shield
+    link: /security
+    span: 4
+
+  - title: 为长期任务而设计
+    details: 可恢复会话、分层配置、profiles 和稳定的运行时概念，让 Savfox 更像完整代理系统，而不是一次性 prompt 外壳。
+    icon: layers
+    link: /concepts
+    span: 6
+
+  - title: 一套产品形态，三端统一
+    details: 在 macOS、Linux、Windows 上都能跑同一套终端 UI、CLI、网关运行时和文档入口，落地成本低，扩展空间大。
+    icon: globe
+    link: /install
+    span: 6
 ---
-
-## 快速路径
-
-<Steps>
-  <Step title="安装">
-
-```bash
-git clone https://github.com/savfox-ai/savfox.git
-cd savfox
-cargo install --path crates/savfox-cli
-```
-
-  </Step>
-  <Step title="登录">
-
-```bash
-savfox login
-```
-
-  </Step>
-  <Step title="运行">
-
-```bash
-savfox
-```
-
-  </Step>
-</Steps>
-
-## 文档入口
-
-<Columns>
-  <Card title="快速开始" href="/start/getting-started" icon="rocket">
-    安装并运行第一个会话。
-  </Card>
-  <Card title="安装" href="/install" icon="download">
-    源码、Docker 和部署方案。
-  </Card>
-  <Card title="CLI 参考" href="/cli" icon="terminal">
-    命令、参数与示例。
-  </Card>
-  <Card title="网关" href="/gateway" icon="server">
-    远程 API、会话和桥接运行时。
-  </Card>
-  <Card title="模型提供商" href="/providers" icon="cpu">
-    OpenAI、Anthropic、Ollama 配置。
-  </Card>
-  <Card title="安全" href="/security" icon="shield">
-    沙箱、审批和令牌访问。
-  </Card>
-</Columns>
-
-## 生态项目
-
-- 主项目：[savfox-ai/savfox](https://github.com/savfox-ai/savfox)
-- 参考项目：[openclaw/openclaw](https://github.com/openclaw/openclaw)
-
-## 许可证
-
-Apache License 2.0

@@ -2,89 +2,68 @@
 pageType: home
 
 hero:
+  badge:
+    text: Terminal-native • Gateway-ready • Sandbox-first
+    link: /gateway
   name: Savfox
-  text: AI-Powered Coding Agent for the Terminal
+  text: |
+    Code fast in the terminal.
+    Run the agent everywhere.
   image:
     src: /images/logos/savfox.svg
-  tagline: Multi-platform coding agent with gateway, chat bridges, and secure sandboxing.
+    alt: Savfox logo
+  tagline: One binary for interactive coding, one-shot execution, HTTP and WebSocket APIs, chat bridges, and policy-controlled automation across macOS, Linux, and Windows.
   actions:
     - theme: brand
       text: Get Started
       link: /start/getting-started
     - theme: alt
-      text: CLI Reference
-      link: /cli
+      text: Explore Gateway
+      link: /gateway
+    - theme: alt
+      text: Provider Setup
+      link: /providers
 
 features:
-  - title: Interactive + Non-Interactive
-    details: Use a rich terminal UI for iterative work or run one-shot tasks via `savfox exec`.
+  - title: Terminal-Native Workflows
+    details: Stay in a rich interactive loop when you are exploring, then drop to `savfox exec` when you need repeatable, automation-friendly one-shot runs.
     icon: terminal
+    link: /start/getting-started
+    span: 6
 
-  - title: Gateway + Chat Bridges
-    details: Expose Savfox through HTTP/WebSocket APIs and bridge conversations from Discord, Telegram, Slack, and Matrix.
-    icon: network
+  - title: Gateway + Remote Sessions
+    details: Expose Savfox through HTTP and WebSocket APIs with session control, approvals, logs, and integration points that feel more like infrastructure than a demo.
+    icon: server
+    link: /gateway
+    span: 6
 
-  - title: Secure by Default
-    details: Combine approvals with workspace sandboxing and platform-native isolation on macOS, Linux, and Windows.
+  - title: Chat Bridges That Ship
+    details: Bring the same agent into Discord, Telegram, Slack, and Matrix so teams can trigger real work where they already collaborate.
+    icon: send
+    link: /channels
+    span: 4
+
+  - title: Provider-Agnostic by Default
+    details: OpenAI, Anthropic, Google, Ollama, and any serious OpenAI-compatible endpoint can fit the same workflow without rethinking the stack.
+    icon: cpu
+    link: /providers
+    span: 4
+
+  - title: Security With Teeth
+    details: Combine approvals, workspace sandboxing, and platform-native isolation so automation stays powerful without becoming reckless.
     icon: shield
+    link: /security
+    span: 4
+
+  - title: Built for Long-Running Work
+    details: Resumable sessions, layered config, profiles, and durable runtime concepts make Savfox feel like an agent system, not a throwaway prompt wrapper.
+    icon: layers
+    link: /concepts
+    span: 6
+
+  - title: One Binary, Multi-Platform
+    details: Run the same product shape on macOS, Linux, and Windows with a terminal UI, CLI, gateway runtime, and docs that all point in the same direction.
+    icon: globe
+    link: /install
+    span: 6
 ---
-
-## Quick Path
-
-<Steps>
-  <Step title="Install">
-
-```bash
-git clone https://github.com/savfox-ai/savfox.git
-cd savfox
-cargo install --path crates/savfox-cli
-```
-
-  </Step>
-  <Step title="Login">
-
-```bash
-savfox login
-```
-
-  </Step>
-  <Step title="Run">
-
-```bash
-savfox
-```
-
-  </Step>
-</Steps>
-
-## Documentation Hub
-
-<Columns>
-  <Card title="Getting Started" href="/start/getting-started" icon="rocket">
-    Install and run your first session.
-  </Card>
-  <Card title="Installation" href="/install" icon="download">
-    Source, Docker, and deployment patterns.
-  </Card>
-  <Card title="CLI Reference" href="/cli" icon="terminal">
-    Commands, flags, and examples.
-  </Card>
-  <Card title="Gateway" href="/gateway" icon="server">
-    Remote API, sessions, and bridge runtime.
-  </Card>
-  <Card title="Providers" href="/providers" icon="cpu">
-    OpenAI, Anthropic, and Ollama setup.
-  </Card>
-  <Card title="Security" href="/security" icon="shield">
-    Sandbox, approvals, and token access.
-  </Card>
-</Columns>
-
-## Ecosystem
-
-- Main project: [savfox-ai/savfox](https://github.com/savfox-ai/savfox)
-- Similar project reference: [openclaw/openclaw](https://github.com/openclaw/openclaw)
-
-## License
-
-Apache License 2.0
