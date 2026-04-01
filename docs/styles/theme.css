@@ -220,10 +220,10 @@ code {
 .rp-home-hero__title,
 .rp-home-hero__subtitle {
   max-width: none;
-  font-size: clamp(3.35rem, 4.8vw, 5rem);
-  line-height: 1.04;
+  font-size: clamp(2.5rem, 2.9vw, 3.25rem);
+  line-height: 1.08;
   letter-spacing: -0.04em;
-  text-wrap: balance;
+  white-space: nowrap;
 }
 
 .rp-home-hero__title-brand {
@@ -435,6 +435,7 @@ code {
   .rp-home-hero__subtitle {
     font-size: clamp(2rem, 8vw, 2.7rem);
     line-height: 1.08;
+    white-space: normal;
   }
 
   .rp-home-hero__tagline {
